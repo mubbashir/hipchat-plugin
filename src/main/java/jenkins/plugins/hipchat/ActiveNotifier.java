@@ -120,6 +120,8 @@ public class ActiveNotifier implements FineGrainedNotifier {
         MessageBuilder message = new MessageBuilder(notifier, r);
         message.appendStatusMessage();
         message.appendDuration();
+        message.appendTestResults();
+
         return message.appendOpenLink().toString();
     }
 
@@ -180,6 +182,15 @@ public class ActiveNotifier implements FineGrainedNotifier {
         public MessageBuilder appendDuration() {
             message.append(" after ");
             message.append(build.getDurationString());
+            return this;
+        }
+
+        public MessageBuilder appendTestResults() {
+            message.append(" - ");
+            message.append(" Tests Result: ");
+            message.append(" Total ="+build.getTestResultAction().getTotalCount());
+            message.append(" Failed ="+build.getTestResultAction().getFailCount());
+
             return this;
         }
 
